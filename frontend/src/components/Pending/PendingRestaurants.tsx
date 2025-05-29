@@ -6,8 +6,10 @@ const PendingRestaurants = () => (
     <Table.Header>
       <Table.Row>
         <Table.ColumnHeader w="sm">ID</Table.ColumnHeader>
-        <Table.ColumnHeader w="sm">Title</Table.ColumnHeader>
-        <Table.ColumnHeader w="sm">Description</Table.ColumnHeader>
+        <Table.ColumnHeader w="sm">Name</Table.ColumnHeader>
+        <Table.ColumnHeader w="sm">Revo Tenant</Table.ColumnHeader>
+        <Table.ColumnHeader w="sm">Revo Client Key</Table.ColumnHeader>
+        <Table.ColumnHeader w="sm">Revo API Key</Table.ColumnHeader>
         <Table.ColumnHeader w="sm">Actions</Table.ColumnHeader>
       </Table.Row>
     </Table.Header>

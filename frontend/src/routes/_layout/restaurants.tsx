@@ -20,7 +20,7 @@ import {
   PaginationNextTrigger,
   PaginationPrevTrigger,
   PaginationRoot,
-} from "@/components/ui/pagination.tsx"
+} from "@/components/ui/pagination"
 
 const restaurantsSearchSchema = z.object({
   page: z.number().catch(1),
@@ -52,7 +52,8 @@ function RestaurantsTable() {
 
   const setPage = (page: number) =>
     navigate({
-      search: (prev: { [key: string]: string }) => ({ ...prev, page }),
+      search: { page } as any,
+      replace: true,
     })
 
   const restaurants = data?.data.slice(0, PER_PAGE) ?? []
@@ -86,26 +87,26 @@ function RestaurantsTable() {
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeader w="sm">ID</Table.ColumnHeader>
-            <Table.ColumnHeader w="sm">Title</Table.ColumnHeader>
-            <Table.ColumnHeader w="sm">Description</Table.ColumnHeader>
+            <Table.ColumnHeader w="sm">Name</Table.ColumnHeader>
+            <Table.ColumnHeader w="sm">Revo Tenant</Table.ColumnHeader>
+            <Table.ColumnHeader w="sm">Revo Client Key</Table.ColumnHeader>
+            <Table.ColumnHeader w="sm">Revo API Key</Table.ColumnHeader>
             <Table.ColumnHeader w="sm">Actions</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {restaurants?.map((restaurant) => (
+          {restaurants.map((restaurant) => (
             <Table.Row key={restaurant.id} opacity={isPlaceholderData ? 0.5 : 1}>
-              <Table.Cell truncate maxW="sm">
-                {restaurant.id}
+              <Table.Cell truncate maxW="sm">{restaurant.id}</Table.Cell>
+              <Table.Cell truncate maxW="sm">{restaurant.name}</Table.Cell>
+              <Table.Cell color={!restaurant.revo_tenant ? "gray" : "inherit"} truncate maxW="sm">
+                {restaurant.revo_tenant || "N/A"}
               </Table.Cell>
-              <Table.Cell truncate maxW="sm">
-                {restaurant.title}
+              <Table.Cell color={!restaurant.revo_client_key ? "gray" : "inherit"} truncate maxW="sm">
+                {restaurant.revo_client_key || "N/A"}
               </Table.Cell>
-              <Table.Cell
-                color={!restaurant.description ? "gray" : "inherit"}
-                truncate
-                maxW="30%"
-              >
-                {restaurant.description || "N/A"}
+              <Table.Cell color={!restaurant.revo_api_key ? "gray" : "inherit"} truncate maxW="sm">
+                {restaurant.revo_api_key || "N/A"}
               </Table.Cell>
               <Table.Cell>
                 <RestaurantActionsMenu restaurant={restaurant} />
@@ -114,6 +115,7 @@ function RestaurantsTable() {
           ))}
         </Table.Body>
       </Table.Root>
+
       <Flex justifyContent="flex-end" mt={4}>
         <PaginationRoot
           count={count}

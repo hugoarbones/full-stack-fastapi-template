@@ -10,7 +10,7 @@ from app.tests.utils.restaurant import create_random_restaurant
 def test_create_restaurant(
     client: TestClient, superuser_token_headers: dict[str, str]
 ) -> None:
-    data = {"title": "Foo", "description": "Fighters"}
+    data = {"name": "Foo", 'revo_tenant': 'pizzeria', 'revo_client_key': 'pizzeria', 'revo_api_key': 'pizzeria'}
     response = client.post(
         f"{settings.API_V1_STR}/restaurants/",
         headers=superuser_token_headers,
@@ -18,8 +18,10 @@ def test_create_restaurant(
     )
     assert response.status_code == 200
     content = response.json()
-    assert content["title"] == data["title"]
-    assert content["description"] == data["description"]
+    assert content["name"] == data["name"]
+    assert content["revo_tenant"] == data["revo_tenant"]
+    assert content["revo_client_key"] == data["revo_client_key"]
+    assert content["revo_api_key"] == data["revo_api_key"]
     assert "id" in content
     assert "owner_id" in content
 
@@ -34,8 +36,10 @@ def test_read_restaurant(
     )
     assert response.status_code == 200
     content = response.json()
-    assert content["title"] == restaurant.title
-    assert content["description"] == restaurant.description
+    assert content["name"] == restaurant.name
+    assert content["revo_tenant"] == restaurant.revo_tenant
+    assert content["revo_client_key"] == restaurant.revo_client_key
+    assert content["revo_api_key"] == restaurant.revo_api_key
     assert content["id"] == str(restaurant.id)
     assert content["owner_id"] == str(restaurant.owner_id)
 
@@ -83,7 +87,7 @@ def test_update_restaurant(
     client: TestClient, superuser_token_headers: dict[str, str], db: Session
 ) -> None:
     restaurant = create_random_restaurant(db)
-    data = {"title": "Updated title", "description": "Updated description"}
+    data = {"name": "Updated name", "revo_tenant": "Updated revo_tenant", "revo_client_key": "Updated revo_client_key", "revo_api_key": "Updated revo_api_key"}
     response = client.put(
         f"{settings.API_V1_STR}/restaurants/{restaurant.id}",
         headers=superuser_token_headers,
@@ -91,8 +95,10 @@ def test_update_restaurant(
     )
     assert response.status_code == 200
     content = response.json()
-    assert content["title"] == data["title"]
-    assert content["description"] == data["description"]
+    assert content["name"] == data["name"]
+    assert content["revo_tenant"] == data["revo_tenant"]
+    assert content["revo_client_key"] == data["revo_client_key"]
+    assert content["revo_api_key"] == data["revo_api_key"]
     assert content["id"] == str(restaurant.id)
     assert content["owner_id"] == str(restaurant.owner_id)
 
@@ -100,7 +106,7 @@ def test_update_restaurant(
 def test_update_restaurant_not_found(
     client: TestClient, superuser_token_headers: dict[str, str]
 ) -> None:
-    data = {"title": "Updated title", "description": "Updated description"}
+    data = {"name": "Updated name", "revo_tenant": "Updated revo_tenant", "revo_client_key": "Updated revo_client_key", "revo_api_key": "Updated revo_api_key"}
     response = client.put(
         f"{settings.API_V1_STR}/restaurants/{uuid.uuid4()}",
         headers=superuser_token_headers,
@@ -115,7 +121,7 @@ def test_update_restaurant_not_enough_permissions(
     client: TestClient, normal_user_token_headers: dict[str, str], db: Session
 ) -> None:
     restaurant = create_random_restaurant(db)
-    data = {"title": "Updated title", "description": "Updated description"}
+    data = {"name": "Updated name", "revo_tenant": "Updated revo_tenant", "revo_client_key": "Updated revo_client_key", "revo_api_key": "Updated revo_api_key"}
     response = client.put(
         f"{settings.API_V1_STR}/restaurants/{restaurant.id}",
         headers=normal_user_token_headers,

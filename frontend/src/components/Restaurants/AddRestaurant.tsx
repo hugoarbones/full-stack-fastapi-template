@@ -40,8 +40,10 @@ const AddRestaurant = () => {
     mode: "onBlur",
     criteriaMode: "all",
     defaultValues: {
-      title: "",
-      description: "",
+      name: "",
+      revo_tenant: "",
+      revo_client_key: "",
+      revo_api_key: "",
     },
   })
 
@@ -88,32 +90,60 @@ const AddRestaurant = () => {
             <VStack gap={4}>
               <Field
                 required
-                invalid={!!errors.title}
-                errorText={errors.title?.message}
-                label="Title"
+                invalid={!!errors.name}
+                errorText={errors.name?.message}
+                label="Name"
               >
                 <Input
-                  id="title"
-                  {...register("title", {
-                    required: "Title is required.",
+                  id="name"
+                  {...register("name", {
+                    required: "Name is required.",
                   })}
-                  placeholder="Title"
+                  placeholder="Name"
                   type="text"
                 />
               </Field>
 
               <Field
-                invalid={!!errors.description}
-                errorText={errors.description?.message}
-                label="Description"
+                invalid={!!errors.revo_tenant}
+                errorText={errors.revo_tenant?.message}
+                label="Revo Tenant"
               >
                 <Input
-                  id="description"
-                  {...register("description")}
-                  placeholder="Description"
+                  id="revo_tenant"
+                  {...register("revo_tenant")}
+                  placeholder="Revo Tenant"
                   type="text"
                 />
               </Field>
+
+              <Field
+                invalid={!!errors.revo_client_key}
+                errorText={errors.revo_client_key?.message}
+                label="Revo Client Key"
+              >
+                <Input
+                  id="revo_client_key"
+                  {...register("revo_client_key")}
+                  placeholder="Revo Client Key"
+                  type="text"
+                />
+              </Field>
+
+              <Field
+                invalid={!!errors.revo_api_key}
+                errorText={errors.revo_api_key?.message}
+                label="Revo API Key"
+              >
+                <Input
+                  id="revo_api_key"
+                  {...register("revo_api_key")}
+                  placeholder="Revo API Key"
+                  type="text"
+                />
+              </Field>
+
+              
             </VStack>
           </DialogBody>
 

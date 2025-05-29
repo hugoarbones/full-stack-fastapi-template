@@ -1,7 +1,6 @@
 import {
   Button,
   ButtonGroup,
-  DialogActionTrigger,
   Input,
   Text,
   VStack,
@@ -11,7 +10,11 @@ import { useState } from "react"
 import { type SubmitHandler, useForm } from "react-hook-form"
 import { FaExchangeAlt } from "react-icons/fa"
 
-import { type ApiError, type RestaurantPublic, RestaurantsService } from "@/client"
+import {
+  type ApiError,
+  type RestaurantPublic,
+  RestaurantsService,
+} from "@/client"
 import useCustomToast from "@/hooks/useCustomToast"
 import { handleError } from "@/utils"
 import {
@@ -23,6 +26,7 @@ import {
   DialogRoot,
   DialogTitle,
   DialogTrigger,
+  DialogActionTrigger,
 } from "../ui/dialog"
 import { Field } from "../ui/field"
 
@@ -31,14 +35,17 @@ interface EditRestaurantProps {
 }
 
 interface RestaurantUpdateForm {
-  title: string
-  description?: string
+  name: string
+  revo_tenant?: string
+  revo_client_key?: string
+  revo_api_key?: string
 }
 
 const EditRestaurant = ({ restaurant }: EditRestaurantProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast } = useCustomToast()
+
   const {
     register,
     handleSubmit,
@@ -49,7 +56,9 @@ const EditRestaurant = ({ restaurant }: EditRestaurantProps) => {
     criteriaMode: "all",
     defaultValues: {
       ...restaurant,
-      description: restaurant.description ?? undefined,
+      revo_tenant: restaurant.revo_tenant ?? undefined,
+      revo_client_key: restaurant.revo_client_key ?? undefined,
+      revo_api_key: restaurant.revo_api_key ?? undefined,
     },
   })
 
@@ -69,7 +78,7 @@ const EditRestaurant = ({ restaurant }: EditRestaurantProps) => {
     },
   })
 
-  const onSubmit: SubmitHandler<RestaurantUpdateForm> = async (data) => {
+  const onSubmit: SubmitHandler<RestaurantUpdateForm> = (data) => {
     mutation.mutate(data)
   }
 
@@ -96,29 +105,55 @@ const EditRestaurant = ({ restaurant }: EditRestaurantProps) => {
             <VStack gap={4}>
               <Field
                 required
-                invalid={!!errors.title}
-                errorText={errors.title?.message}
-                label="Title"
+                invalid={!!errors.name}
+                errorText={errors.name?.message}
+                label="Name"
               >
                 <Input
-                  id="title"
-                  {...register("title", {
-                    required: "Title is required",
+                  id="name"
+                  {...register("name", {
+                    required: "Name is required",
                   })}
-                  placeholder="Title"
+                  placeholder="Name"
                   type="text"
                 />
               </Field>
 
               <Field
-                invalid={!!errors.description}
-                errorText={errors.description?.message}
-                label="Description"
+                invalid={!!errors.revo_tenant}
+                errorText={errors.revo_tenant?.message}
+                label="Revo Tenant"
               >
                 <Input
-                  id="description"
-                  {...register("description")}
-                  placeholder="Description"
+                  id="revo_tenant"
+                  {...register("revo_tenant")}
+                  placeholder="Revo Tenant"
+                  type="text"
+                />
+              </Field>
+
+              <Field
+                invalid={!!errors.revo_client_key}
+                errorText={errors.revo_client_key?.message}
+                label="Revo Client Key"
+              >
+                <Input
+                  id="revo_client_key"
+                  {...register("revo_client_key")}
+                  placeholder="Revo Client Key"
+                  type="text"
+                />
+              </Field>
+
+              <Field
+                invalid={!!errors.revo_api_key}
+                errorText={errors.revo_api_key?.message}
+                label="Revo API Key"
+              >
+                <Input
+                  id="revo_api_key"
+                  {...register("revo_api_key")}
+                  placeholder="Revo API Key"
                   type="text"
                 />
               </Field>

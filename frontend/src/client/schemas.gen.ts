@@ -183,106 +183,101 @@ export const ItemsPublicSchema = {
 } as const
 
 
-
 export const RestaurantCreateSchema = {
   properties: {
-    title: {
+    name: {
       type: "string",
       maxLength: 255,
       minLength: 1,
-      title: "Title",
+      title: "Name",
     },
-    description: {
-      anyOf: [
-        {
-          type: "string",
-          maxLength: 255,
-        },
-        {
-          type: "null",
-        },
-      ],
-      title: "Description",
+    revo_tenant: {
+      type: "string",
+      maxLength: 255,
+      minLength: 1,
+      title: "Revo Tenant",
+    },
+    revo_client_key: {
+      type: "string",
+      maxLength: 255,
+      minLength: 1,
+      title: "Revo Client Key",
+    },
+    revo_api_key: {
+      type: "string",
+      maxLength: 255,
+      minLength: 1,
+      title: "Revo API Key",
     },
   },
   type: "object",
-  required: ["title"],
-  title: "ItemCreate",
+  required: ["name", "revo_tenant", "revo_client_key", "revo_api_key"],
+  title: "RestaurantCreate",
 } as const
 
 export const RestaurantPublicSchema = {
   properties: {
-    title: {
+    name: {
       type: "string",
       maxLength: 255,
       minLength: 1,
-      title: "Title",
+      title: "Name",
     },
-    description: {
-      anyOf: [
-        {
-          type: "string",
-          maxLength: 255,
-        },
-        {
-          type: "null",
-        },
-      ],
-      title: "Description",
-    },
-    id: {
+    revo_tenant: {
       type: "string",
-      format: "uuid",
-      title: "Id",
+      maxLength: 255,
+      minLength: 1,
+      title: "Revo Tenant",
     },
-    owner_id: {
+    revo_client_key: {
       type: "string",
-      format: "uuid",
-      title: "Owner Id",
+      maxLength: 255,
+      minLength: 1,
+      title: "Revo Client Key",
     },
+    
   },
   type: "object",
-  required: ["title", "id", "owner_id"],
-  title: "ItemPublic",
+  required: ["name", "revo_tenant", "revo_client_key", "revo_api_key"],
+  title: "RestaurantPublic",
 } as const
 
 export const RestaurantUpdateSchema = {
   properties: {
-    title: {
-      anyOf: [
-        {
-          type: "string",
-          maxLength: 255,
-          minLength: 1,
-        },
-        {
-          type: "null",
-        },
-      ],
-      title: "Title",
+    name: {
+      type: "string",
+      maxLength: 255,
+      minLength: 1,
+      title: "Name",
     },
-    description: {
-      anyOf: [
-        {
-          type: "string",
-          maxLength: 255,
-        },
-        {
-          type: "null",
-        },
-      ],
-      title: "Description",
+    revo_tenant: {
+      type: "string",
+      maxLength: 255,
+      minLength: 1,
+      title: "Revo Tenant",
+    },
+    revo_client_key: {
+      type: "string",
+      maxLength: 255,
+      minLength: 1,
+      title: "Revo Client Key",
+    },
+    revo_api_key: {
+      type: "string",
+      maxLength: 255,
+      minLength: 1,
+      title: "Revo API Key",
     },
   },
   type: "object",
-  title: "ItemUpdate",
+  title: "RestaurantUpdate",
 } as const
 
 export const RestaurantsPublicSchema = {
   properties: {
     data: {
       items: {
-        $ref: "#/components/schemas/ItemPublic",
+        $ref: "#/components/schemas/RestaurantPublic",
       },
       type: "array",
       title: "Data",
@@ -294,7 +289,7 @@ export const RestaurantsPublicSchema = {
   },
   type: "object",
   required: ["data", "count"],
-  title: "ItemsPublic",
+  title: "RestaurantsPublic",
 } as const
 
 export const MessageSchema = {

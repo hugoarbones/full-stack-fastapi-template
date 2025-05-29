@@ -93,8 +93,10 @@ class ItemsPublic(SQLModel):
 
 # Shared properties
 class RestaurantBase(SQLModel):
-    title: str = Field(min_length=1, max_length=255)
-    description: str | None = Field(default=None, max_length=255)
+    name: str = Field(min_length=1, max_length=255)
+    revo_tenant: str | None = Field(default=None, max_length=255)
+    revo_client_key: str | None = Field(default=None, max_length=255)
+    revo_api_key: str | None = Field(default=None, max_length=255)
 
 
 # Properties to receive on item creation
@@ -104,7 +106,7 @@ class RestaurantCreate(RestaurantBase):
 
 # Properties to receive on item update
 class RestaurantUpdate(RestaurantBase):
-    title: str | None = Field(default=None, min_length=1, max_length=255)  # type: ignore
+    name: str | None = Field(default=None, min_length=1, max_length=255)  # type: ignore
 
 
 # Database model, database table inferred from class name
@@ -123,7 +125,7 @@ class RestaurantPublic(RestaurantBase):
 
 
 class RestaurantsPublic(SQLModel):
-    data: list[ItemPublic]
+    data: list[RestaurantPublic]
     count: int
 
 

@@ -37,13 +37,17 @@ export type ItemUpdate = {
 
 
 export type RestaurantCreate = {
-  title: string
-  description?: string | null
+  name: string
+  revo_tenant?: string | null
+  revo_client_key?: string | null
+  revo_api_key?: string | null
 }
 
 export type RestaurantPublic = {
-  title: string
-  description?: string | null
+  name: string
+  revo_tenant?: string | null
+  revo_client_key?: string | null
+  revo_api_key?: string | null
   id: string
   owner_id: string
 }
@@ -54,8 +58,10 @@ export type RestaurantsPublic = {
 }
 
 export type RestaurantUpdate = {
-  title?: string | null
-  description?: string | null
+  name?: string | null
+  revo_tenant?: string | null
+  revo_client_key?: string | null
+  revo_api_key?: string | null
 }
 
 export type Message = {
