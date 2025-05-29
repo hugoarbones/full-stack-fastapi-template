@@ -14,6 +14,16 @@ import type {
   ItemsUpdateItemResponse,
   ItemsDeleteItemData,
   ItemsDeleteItemResponse,
+  RestaurantsReadRestaurantsData,
+  RestaurantsReadRestaurantsResponse,
+  RestaurantsCreateRestaurantData,
+  RestaurantsCreateRestaurantResponse,
+  RestaurantsReadRestaurantData,
+  RestaurantsReadRestaurantResponse,
+  RestaurantsUpdateRestaurantData,
+  RestaurantsUpdateRestaurantResponse,
+  RestaurantsDeleteRestaurantData,
+  RestaurantsDeleteRestaurantResponse,
   LoginLoginAccessTokenData,
   LoginLoginAccessTokenResponse,
   LoginTestTokenResponse,
@@ -159,6 +169,128 @@ export class ItemsService {
     return __request(OpenAPI, {
       method: "DELETE",
       url: "/api/v1/items/{id}",
+      path: {
+        id: data.id,
+      },
+      errors: {
+        422: "Validation Error",
+      },
+    })
+  }
+}
+
+
+export class RestaurantsService {
+  /**
+   * Read Restaurants
+   * Retrieve restaurants.
+   * @param data The data for the request.
+   * @param data.skip
+   * @param data.limit
+   * @returns RestaurantsPublic Successful Response
+   * @throws ApiError
+   */
+  public static readRestaurants(
+    data: RestaurantsReadRestaurantsData = {},
+  ): CancelablePromise<RestaurantsReadRestaurantsResponse> {
+    return __request(OpenAPI, {
+      method: "GET",
+      url: "/api/v1/restaurants/",
+      query: {
+        skip: data.skip,
+        limit: data.limit,
+      },
+      errors: {
+        422: "Validation Error",
+      },
+    })
+  }
+
+  /**
+   * Create Item
+   * Create new restaurant.
+   * @param data The data for the request.
+   * @param data.requestBody
+   * @returns RestaurantPublic Successful Response
+   * @throws ApiError
+   */
+  public static createRestaurant(
+    data: RestaurantsCreateRestaurantData,
+  ): CancelablePromise<RestaurantsCreateRestaurantResponse> {
+    return __request(OpenAPI, {
+      method: "POST",
+      url: "/api/v1/restaurants/",
+      body: data.requestBody,
+      mediaType: "application/json",
+      errors: {
+        422: "Validation Error",
+      },
+    })
+  }
+
+  /**
+   * Read Item
+   * Get restaurant by ID.
+   * @param data The data for the request.
+   * @param data.id
+   * @returns RestaurantPublic Successful Response
+   * @throws ApiError
+   */
+  public static readRestaurant(
+    data: RestaurantsReadRestaurantData,
+  ): CancelablePromise<RestaurantsReadRestaurantResponse> {
+    return __request(OpenAPI, {
+      method: "GET",
+      url: "/api/v1/restaurants/{id}",
+      path: {
+        id: data.id,
+      },
+      errors: {
+        422: "Validation Error",
+      },
+    })
+  }
+
+  /**
+   * Update Restaurant
+   * Update a restaurant.
+   * @param data The data for the request.
+   * @param data.id
+   * @param data.requestBody
+   * @returns RestaurantPublic Successful Response
+   * @throws ApiError
+   */
+  public static updateRestaurant(
+    data: RestaurantsUpdateRestaurantData,
+  ): CancelablePromise<RestaurantsUpdateRestaurantResponse> {
+    return __request(OpenAPI, {
+      method: "PUT",
+      url: "/api/v1/restaurants/{id}",
+      path: {
+        id: data.id,
+      },
+      body: data.requestBody,
+      mediaType: "application/json",
+      errors: {
+        422: "Validation Error",
+      },
+    })
+  }
+
+  /**
+   * Delete Restaurant
+   * Delete a restaurant.
+   * @param data The data for the request.
+   * @param data.id
+   * @returns Message Successful Response
+   * @throws ApiError
+   */
+  public static deleteRestaurant(
+    data: RestaurantsDeleteRestaurantData,
+  ): CancelablePromise<RestaurantsDeleteRestaurantResponse> {
+    return __request(OpenAPI, {
+      method: "DELETE",
+      url: "/api/v1/restaurants/{id}",
       path: {
         id: data.id,
       },

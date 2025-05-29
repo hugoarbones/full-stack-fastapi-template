@@ -35,6 +35,29 @@ export type ItemUpdate = {
   description?: string | null
 }
 
+
+export type RestaurantCreate = {
+  title: string
+  description?: string | null
+}
+
+export type RestaurantPublic = {
+  title: string
+  description?: string | null
+  id: string
+  owner_id: string
+}
+
+export type RestaurantsPublic = {
+  data: Array<RestaurantPublic>
+  count: number
+}
+
+export type RestaurantUpdate = {
+  title?: string | null
+  description?: string | null
+}
+
 export type Message = {
   message: string
 }
@@ -138,6 +161,40 @@ export type ItemsDeleteItemData = {
 }
 
 export type ItemsDeleteItemResponse = Message
+
+
+
+export type RestaurantsReadRestaurantsData = {
+  limit?: number
+  skip?: number
+}
+
+export type RestaurantsReadRestaurantsResponse = RestaurantsPublic
+
+export type RestaurantsCreateRestaurantData = {
+  requestBody: RestaurantCreate
+}
+
+export type RestaurantsCreateRestaurantResponse = RestaurantPublic
+
+export type RestaurantsReadRestaurantData = {
+  id: string
+}
+
+export type RestaurantsReadRestaurantResponse = RestaurantPublic
+
+export type RestaurantsUpdateRestaurantData = {
+  id: string
+  requestBody: RestaurantUpdate
+}
+
+export type RestaurantsUpdateRestaurantResponse = RestaurantPublic
+
+export type RestaurantsDeleteRestaurantData = {
+  id: string
+}
+
+export type RestaurantsDeleteRestaurantResponse = Message
 
 export type LoginLoginAccessTokenData = {
   formData: Body_login_login_access_token

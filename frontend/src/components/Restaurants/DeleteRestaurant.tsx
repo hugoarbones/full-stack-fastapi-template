@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { FiTrash2 } from "react-icons/fi"
 
-import { UsersService } from "@/client"
+import { RestaurantsService } from "@/client"
 import {
   DialogActionTrigger,
   DialogBody,
@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dialog"
 import useCustomToast from "@/hooks/useCustomToast"
 
-const DeleteUser = ({ id }: { id: string }) => {
+const DeleteRestaurant = ({ id }: { id: string }) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
@@ -26,18 +26,18 @@ const DeleteUser = ({ id }: { id: string }) => {
     formState: { isSubmitting },
   } = useForm()
 
-  const deleteUser = async (id: string) => {
-    await UsersService.deleteUser({ userId: id })
+  const deleteRestaurant = async (id: string) => {
+    await RestaurantsService.deleteRestaurant({ id: id })
   }
 
   const mutation = useMutation({
-    mutationFn: deleteUser,
+    mutationFn: deleteRestaurant,
     onSuccess: () => {
-      showSuccessToast("The user was deleted successfully")
+      showSuccessToast("The restaurant was deleted successfully")
       setIsOpen(false)
     },
     onError: () => {
-      showErrorToast("An error occurred while deleting the user")
+      showErrorToast("An error occurred while deleting the restaurant")
     },
     onSettled: () => {
       queryClient.invalidateQueries()
@@ -59,18 +59,19 @@ const DeleteUser = ({ id }: { id: string }) => {
       <DialogTrigger asChild>
         <Button variant="ghost" size="sm" colorPalette="red">
           <FiTrash2 fontSize="16px" />
-          Delete User
+          Delete Restaurant
         </Button>
       </DialogTrigger>
+
       <DialogContent>
         <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogCloseTrigger />
           <DialogHeader>
-            <DialogTitle>Delete User</DialogTitle>
+            <DialogTitle>Delete Restaurant</DialogTitle>
           </DialogHeader>
           <DialogBody>
             <Text mb={4}>
-              All items and restaurants associated with this user will also be{" "}
-              <strong>permanently deleted.</strong> Are you sure? You will not
+              This restaurant will be permanently deleted. Are you sure? You will not
               be able to undo this action.
             </Text>
           </DialogBody>
@@ -94,11 +95,10 @@ const DeleteUser = ({ id }: { id: string }) => {
               Delete
             </Button>
           </DialogFooter>
-          <DialogCloseTrigger />
         </form>
       </DialogContent>
     </DialogRoot>
   )
 }
 
-export default DeleteUser
+export default DeleteRestaurant
