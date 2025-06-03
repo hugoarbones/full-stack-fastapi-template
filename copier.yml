@@ -44,7 +44,7 @@ smtp_password:
 emails_from_email:
   type: str
   help: The email account to send emails from, you can set it later in .env
-  default: info@example.com
+  default: hugoarbones@gmail.com
 
 postgres_password:
   type: str

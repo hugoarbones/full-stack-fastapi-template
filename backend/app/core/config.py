@@ -71,17 +71,28 @@ class Settings(BaseSettings):
 
     SMTP_TLS: bool = True
     SMTP_SSL: bool = False
-    SMTP_PORT: int = 587
+    SMTP_PORT: int = 1025
     SMTP_HOST: str | None = None
     SMTP_USER: str | None = None
     SMTP_PASSWORD: str | None = None
     EMAILS_FROM_EMAIL: EmailStr | None = None
     EMAILS_FROM_NAME: EmailStr | None = None
 
+    SMTP_TLS_REAL: bool = True
+    SMTP_SSL_REAL: bool = False
+    SMTP_PORT_REAL: int | None = None
+    SMTP_HOST_REAL: str | None = None
+    SMTP_USER_REAL: str | None = None
+    SMTP_PASSWORD_REAL: str | None = None
+    EMAILS_FROM_EMAIL_REAL: EmailStr | None = None
+    EMAILS_FROM_NAME_REAL: EmailStr | None = None
+
     @model_validator(mode="after")
     def _set_default_emails_from(self) -> Self:
         if not self.EMAILS_FROM_NAME:
             self.EMAILS_FROM_NAME = self.PROJECT_NAME
+        if not self.EMAILS_FROM_NAME_REAL:
+            self.EMAILS_FROM_NAME_REAL = self.PROJECT_NAME
         return self
 
     EMAIL_RESET_TOKEN_EXPIRE_HOURS: int = 48
@@ -90,6 +101,11 @@ class Settings(BaseSettings):
     @property
     def emails_enabled(self) -> bool:
         return bool(self.SMTP_HOST and self.EMAILS_FROM_EMAIL)
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def emails_enabled_real(self) -> bool:
+        return bool(self.SMTP_HOST_REAL and self.EMAILS_FROM_EMAIL_REAL and self.SMTP_PORT_REAL)
 
     EMAIL_TEST_USER: EmailStr = "test@example.com"
     FIRST_SUPERUSER: EmailStr
